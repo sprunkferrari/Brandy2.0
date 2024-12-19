@@ -13,5 +13,5 @@ export X32_CONTROL="192.168.1.31"
 export SPRUNK_DN30R="192.168.1.40"
 export SPRUNK_DN30T="192.168.1.41"
 export JURI_DN30T="192.168.1.42"
-
+echo "Variables successfully defined."
 exit
