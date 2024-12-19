@@ -4,6 +4,6 @@
 # If all devices are running, the exit status is 0.
 #
 #############
-./definitions.zsh 
+. ./definitions.zsh 
 printenv
 exit
