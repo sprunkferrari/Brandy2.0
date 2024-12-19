@@ -1,4 +1,4 @@
-#/bin/zsh
+#!/bin/zsh
 # Script used for defining all the fixed variables in the system.
 #####
 $GATEWAY=192.168.1.1
