@@ -5,6 +5,7 @@
 #
 #  Created by Francesco Ferrari on 20/12/24.
 #
+clear
 printf "-- BRANDY 2.0 --\n"
 printf "--------------\n"
 printf "Welcome Sprunk!\n"
