@@ -5,19 +5,70 @@
 #
 #  Created by Francesco Ferrari on 20/12/24.
 #
+printf "-- BRANDY 2.0 --\n"
+printf "--------------\n"
+printf "Welcome Sprunk!\n"
+printf "--------------\n"
 
-printf "--------------"
-printf "Welcome Sprunk!"
-printf "--------------"
+. ./status.zsh
 
-. ./definitions.zsh
+printf "--------------\n"
+printf "Now Launching"
+printf "--------------\n"
 
+if [[ "$SPRUNK_MINI_STATUS" == "CONNECTED" ]];
+    then
+    else
+        while :
+            do
+                printf "WARNING: SPRUNK_MINI is missing. Continue anyway? y/n -> "
+                read CONTINUE
+                case $CONTINUE in
+                    ( y ) break;;
+                    ( n ) exit 1 ;;
+                    ( * ) printf "Not allowed\n" && continue ;;
+                esac
+            done
+fi
 
-case i in
-    ( malvax ) ssh sprunk@"$SPRUNK_MINI" zsh launch_malvax.zsh && ssh sprunk@"$JURI_MINI" zsh launch_malvax_seq.zsh
-    ( lpm ) ssh sprunk@"$SPRUNK_MINI" zsh launch_lpm.zsh
-    ( bper ) ssh sprunk@"$SPRUNK_MINI" zsh launch_bper.zsh
-    ( * )
-esac
+while :
+do
+    printf "Enter the name of the project you wish to boot (default: malvax) -> "
+    read -t 5 PROJECT_NAME
+    case $PROJECT_NAME in
+        ( malvax | "" )
+            if [[ "$JURI_MINI_STATUS" == "CONNECTED" ]];
+                then
+                else
+                    while :
+                        do
+                            printf "WARNING: JURI_MINI is missing. Continue anyway? y/n -> "
+                            read CONTINUE
+                            case $CONTINUE in
+                                ( y ) break;;
+                                ( n ) exit 1 ;;
+                                ( * ) printf "Not allowed\n" && continue ;;
+                            esac
+                        done
+            fi
+            break
+            printf "--- Launching Malvax ---"
+            export ACTIVE_PROJECT=MALVAX
+            ssh sprunk@"$SPRUNK_MINI" ./launch_malvax.zsh &&
+            ssh sprunk@"$JURI_MINI" ./launch_malvax_seq.zsh
+            ;;
+        ( lpm )
+            break
+            printf "--- Launching LPM ---"
+            export ACTIVE_PROJECT=LPM
+            ssh sprunk@"$SPRUNK_MINI" ./launch_lpm.zsh ;;
+        ( bper )
+            break
+            printf "--- Launching BPER ---"
+            export ACTIVE_PROJECT=BPER
+            ssh sprunk@"$SPRUNK_MINI" ./launch_bper.zsh ;;
+        ( * ) printf "ERROR: Project not found.\n" && continue ;;
+    esac
+done
 
 
