@@ -19,7 +19,7 @@ for DEVICE ; do
         printf "$DEVICE is missing. "
         COUNT_MISSING=$(("$COUNT_MISSING" + 1))
         export ""$DEVICE"_STATUS"="MISSING"
-        else COUNT_CONNECTED=$(expr "$COUNT_CONNECTED" '+' '1')
+        else COUNT_CONNECTED=$(("$COUNT_CONNECTED" + 1))
         export ""$DEVICE"_STATUS"="CONNECTED"
     fi
 done
@@ -33,20 +33,23 @@ fi
 
 sleep 1
 printf "-----------------\n"
-printf "Performing USB (VirtualHere) checkup"
-printf "\n"
-$VIRTUALHERE_PATH -t list
+printf "Performing USB (VirtualHere) checkup.\n"
+VH_LIST=$($VIRTUALHERE_PATH -t list)
 
 sleep 1
 printf "-----------------\n"
 printf "Performing DANTE checkup.\n"
-printf "\n"
-DANTE_LIST=$(dante-cli list-devices)
+DN_LIST=$(dante-cli list-devices)
 
-printf "--DEVICE------NET STATUS------VH STATUS--------DANTE STATUS--\n"
+printf "--DEVICE------NET STATUS------VH STATUS-------DANTE STATUS--\n"
 for DEVICE ; do
-if  $DANTE_LIST | grep $DEVICE ; then
+if  [[ $DEVICE =~ $DN_LIST ]] ; then
         export ""$DEVICE"_DN_STATUS"="CONNECTED"
         else export ""$DEVICE"_DN_STATUS"="MISSING"
-    printf "$DEVICE     $(eval "$DEVICE"_STATUS)    "$(eval "$DEVICE"_VH_STATUS)     $(eval "$DEVICE"_DN_STATUS)"
+fi
+if  [[ $DEVICE =~ $VH_LIST ]] ; then
+        export ""$DEVICE"_VH_STATUS"="CONNECTED"
+        else export ""$DEVICE"_VH_STATUS"="MISSING"
+fi
+    printf "$DEVICE     $(printenv "$DEVICE"_STATUS)    "$(printenv "$DEVICE"_VH_STATUS)     $(printenv "$DEVICE"_DN_STATUS)"
 
