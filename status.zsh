@@ -5,10 +5,9 @@
 #
 #############
 LOGFILE="./log.txt"
-printf "-----------------\n"
-printf "Performing network checkup.\n"
+printf "-----------------\nPerforming network checkup.\n-----------------\n"
+
 . ./definitions.zsh
-printf "\n"
 set - $(printenv ALL_DEVICES)
 COUNT_MISSING="0"
 COUNT_CONNECTED="0"
@@ -23,16 +22,14 @@ ipsub()
 
 
 sleep 1
-printf "-----------------\n"
-printf "Performing USB (VirtualHere) checkup.\n"
+printf "Performing USB (VirtualHere) checkup...\n"
 VH_LIST=$($VIRTUALHERE_PATH -t list)
 
 sleep 1
-printf "-----------------\n"
-printf "Performing DANTE checkup.\n"
+printf "Performing DANTE checkup...\n"
 DN_LIST=$(dante-cli list-devices)
 
-printf "--DEVICE------NET STATUS------VH STATUS-------DANTE STATUS--\n"
+printf "\n--DEVICE------NET STATUS------VH STATUS-------DANTE STATUS--\n"
 for DEVICE ; do
 if pingsub $DEVICE ; then
 export COUNT_CONNECTED=$(("$COUNT_CONNECTED" + 1)
@@ -53,7 +50,7 @@ fi
 printf "\n"
 printf ""$COUNT_CONNECTED"/"$#" devices connected\n"
 if [[ COUNT_MISSING > 0 ]]; then
-    printf "$COUNT_MISSING devices missing\n"
+    printf "WARNING: $COUNT_MISSING devices missing\n"
 exit 1
 else exit 0
 fi
