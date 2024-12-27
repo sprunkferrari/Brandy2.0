@@ -5,31 +5,22 @@
 #
 #############
 LOGFILE="./log.txt"
-printf "-----------------\nPerforming network checkup.\n-----------------\n"
+printf "-----------------\nPerforming Network / VH / Dante checkup...\n\n"
 
 . ./definitions.zsh
 set - $(printenv ALL_DEVICES)
 COUNT_MISSING="0"
 COUNT_CONNECTED="0"
 
-pingsub()
-{
-    local IP_ADDRESS
-    eval IP_ADDRESS=$"$1"
-    ping -o -c 3 -t 2 -q $IP_ADDRESS &> /dev/null
-}
-
 sleep 1
-printf "Performing VH checkup...\n"
 $VIRTUALHERE_PATH -t list 2> ./temp/vh_list
 
 sleep 1
-printf "Performing DANTE checkup...\n"
 dante-cli list-devices > ./temp/dn_list
 
 printf "\n--DEVICE--\t\t-NET STATUS-\t\t-VH STATUS-\t\t-DANTE STATUS-\n\n"
 for DEVICE ; do
-    if pingsub $DEVICE > /dev/null ;
+    if pingsub $DEVICE ;
         then
             COUNT_CONNECTED=$(("$COUNT_CONNECTED" + 1))
             export ""$DEVICE"_STATUS"="CONNECTED"

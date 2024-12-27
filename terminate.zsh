@@ -5,16 +5,25 @@
 #
 #  Created by Francesco Ferrari on 20/12/24.
 #  
-printf "-----------"
-printf "Ready to Terminate"
-printf "-----------"
+printf "-------------\n"
+printf "Ready to Terminate\n"
+printf "-------------\n"
 
 . ./definitions.zsh
+set - $(printenv PC_DEVICES)
 
-ssh sprunk@"$SPRUNK_MINI" ./quit.zsh
-ssh sprunk@"$JURI_MINI" ./quit.zsh
-
-ssh sprunk@"$RASPI_SPRUNK_P6" shutdown -h now
-ssh sprunk@"$RASPI_SPRUNK_RACK" shutdown -h now
-ssh sprunk@"$RASPI_JACK" shutdown -h now
-ssh sprunk@"$RASPI_JURIJ" shutdown -h now
+if pingsub 192.168.1.10 ; then
+    printf "Quitting SPRUNK_MINI\n"
+    ssh sprunk@192.168.1.10 ./quit.zsh
+fi
+if pingsub 192.168.1.11 ; then
+    printf "Quitting JURI_MINI\n"
+    ssh sprunk@192.168.1.11 ./quit.zsh
+fi
+for DEVICE ; do
+        eval IP_ADDRESS=$"$DEVICE"
+        if pingsub $IP_ADDRESS ; then
+        printf "Shutting down $DEVICE\n"
+        ssh sprunk@"$IP_ADDRESS" shutdown -h now
+        fi
+done

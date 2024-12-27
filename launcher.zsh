@@ -6,10 +6,8 @@
 #  Created by Francesco Ferrari on 20/12/24.
 #
 clear
-printf "-- BRANDY 2.0 --\n"
-printf "--------------\n"
-printf "Welcome Sprunk!\n"
-printf "--------------\n"
+printf "--- BRANDY 2.0 --\n"
+printf "-----------------\nWelcome Sprunk!\n-----------------\n"
 
 . ./status.zsh
 if [[ $? = 1 ]] ; then

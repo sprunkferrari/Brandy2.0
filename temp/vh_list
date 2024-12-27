@@ -1,8 +1,6 @@
 VirtualHere Client IPC, below are the available devices:
 (Value in brackets = address, * = Auto-Use)
 
-JURI_RASPI (raspi-juri:7575) 
-   --> USB 10/100 LAN (raspi-juri.114) 
 
 Auto-Find currently on
 Auto-Use All currently off
