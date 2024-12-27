@@ -17,9 +17,9 @@ set - $(printenv PC_DEVICES)
 zsh ./quit.zsh
 
 #Quitting J
-if pingsub 192.168.1.11 ; then
+if pingsub "$JURI_MINI" ; then
     printf "Quitting JURI_MINI\n"
-    ssh sprunk@192.168.1.11 ./quit.zsh
+    ssh sprunk@"$(printenv JURI_MINI)" ./quit.zsh
 fi
 sleep 5
 #Shutting remotes
