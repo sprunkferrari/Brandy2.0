@@ -12,14 +12,17 @@ printf "-------------\n"
 . ./definitions.zsh
 set - $(printenv PC_DEVICES)
 
-if pingsub 192.168.1.10 ; then
-    printf "Quitting SPRUNK_MINI\n"
-    ssh sprunk@192.168.1.10 ./quit.zsh
-fi
+#Quitting local
+
+zsh ./quit.zsh
+
+#Quitting J
 if pingsub 192.168.1.11 ; then
     printf "Quitting JURI_MINI\n"
     ssh sprunk@192.168.1.11 ./quit.zsh
 fi
+
+#Shutting remotes
 for DEVICE ; do
         eval IP_ADDRESS=$"$DEVICE"
         if pingsub $IP_ADDRESS ; then
@@ -27,3 +30,7 @@ for DEVICE ; do
         ssh sprunk@"$IP_ADDRESS" shutdown -h now
         fi
 done
+
+#Shutting local
+printf "Shutting down local...\n"
+shutdown -h 5
