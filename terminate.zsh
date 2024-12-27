@@ -21,7 +21,7 @@ if pingsub 192.168.1.11 ; then
     printf "Quitting JURI_MINI\n"
     ssh sprunk@192.168.1.11 ./quit.zsh
 fi
-
+sleep 5
 #Shutting remotes
 for DEVICE ; do
         eval IP_ADDRESS=$"$DEVICE"
