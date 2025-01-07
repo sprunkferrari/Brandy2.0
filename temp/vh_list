@@ -1,9 +1,1 @@
-VirtualHere Client IPC, below are the available devices:
-(Value in brackets = address, * = Auto-Use)
-
-
-Auto-Find currently on
-Auto-Use All currently off
-Reverse Lookup currently off
-Reverse SSL Lookup currently off
-VirtualHere Client not running as a service
+An existing client is not running. Start the client first so it can be connected to
