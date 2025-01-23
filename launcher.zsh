@@ -11,16 +11,8 @@ printf "-----------------\nWelcome Sprunk!\n-----------------\n"
 
 . ./status.zsh
 if [[ $? = 1 ]] ; then
- while :
-            do
-                printf "WARNING: Not all devices are connected. Continue anyway? y/n -> "
-                read CONTINUE
-                case $CONTINUE in
-                    ( y ) break;;
-                    ( n ) exit 1 ;;
-                    ( * ) printf "Not allowed\n" && continue ;;
-                esac
-            done
+            printf "WARNING: Not all devices are connected. ENTER to continue anyway."
+            read CONTINUE
 fi
 
 printf "--------------\n"
@@ -28,16 +20,9 @@ printf "Now Launching"
 printf "--------------\n"
 
 if [[ "$SPRUNK_MINI_STATUS" != "CONNECTED" ]];
-    then while :
-            do
-                printf "WARNING: SPRUNK_MINI is missing. Continue anyway? y/n -> "
+    then
+                printf "WARNING: SPRUNK_MINI is missing. ENTER to continue anyway."
                 read CONTINUE
-                case $CONTINUE in
-                    ( y ) break;;
-                    ( n ) exit 1 ;;
-                    ( * ) printf "Not allowed\n" && continue ;;
-                esac
-            done
 fi
 
 while :
@@ -47,16 +32,9 @@ do
     case $PROJECT_NAME in
         ( malvax | "" )
             if [[ "$JURI_MINI_STATUS" != "CONNECTED" ]];
-                then  while :
-                        do
-                            printf "WARNING: JURI_MINI is missing. Continue anyway? y/n -> "
+                then
+                            printf "WARNING: JURI_MINI is missing. ENTER to continue anyway."
                             read CONTINUE
-                            case $CONTINUE in
-                                ( y ) break;;
-                                ( n ) exit 1 ;;
-                                ( * ) printf "Not allowed\n" && continue ;;
-                            esac
-                        done
             fi
             break
             printf "--- Launching Malvax ---"
