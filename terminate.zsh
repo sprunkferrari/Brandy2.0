@@ -48,14 +48,14 @@ if pingsub "$JURI_MINI" ; then
         
         #Shutting J
         printf "Shutting down JURI_MINI..."
-        ssh sprunk@"$(printenv JURI_MINI)" osascript -e 'tell app "System Events" to shut down'
-        if [[ $? == 0 ]] ; 
+        ssh sprunk@"$(printenv JURI_MINI)" /Users/sprunk/brandy/shutdown-applescript.zsh
+        if [[ $? == 0 ]] ;
 then printf "\tSuccess\n"
 else	while [[ $? == 1 ]]; do
 			printf "\nFailed. Try again? y/n ->"
             read ANSWER
             case $ANSWER in
-            	( y ) printf "Shutting down JURI_MINI..." && ssh sprunk@"$(printenv JURI_MINI)" osascript -e 'tell app "System Events" to shut down' ;;
+            	( y ) printf "Shutting down JURI_MINI..." && ssh sprunk@"$(printenv JURI_MINI)" /Users/sprunk/brandy/shutdown-applescript.zsh ;;
                 ( n ) break ;;
                 ( * ) printf "Not allowed.\n" && continue ;;
             esac
