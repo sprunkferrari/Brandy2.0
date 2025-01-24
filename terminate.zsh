@@ -26,8 +26,8 @@ sleep 5
 for DEVICE ; do
         eval IP_ADDRESS=$"$DEVICE"
         if pingsub $IP_ADDRESS ; then
-        printf "Shutting down $DEVICE\n"
         ssh sprunk@"$IP_ADDRESS" shutdown -h now
+        printf "Shutting down $DEVICE\n"
         fi
 done
 
