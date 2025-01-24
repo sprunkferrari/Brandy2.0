@@ -67,5 +67,6 @@ for DEVICE ; do
 done
 
 #Shutting local
-printf "Shutting down local...\n"
-shutdown -h 5
+printf "Shutting down local. Goodbye\n"
+sleep 5
+osascript -e 'tell app "System Events" to shut down'
