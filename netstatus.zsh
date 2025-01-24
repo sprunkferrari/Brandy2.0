@@ -36,8 +36,7 @@ for DEVICE ; do
     fi
     printf "$DEVICE\t\t$(printenv "$DEVICE"_STATUS)\t\t$(printenv "$DEVICE"_VH_STATUS)\t\t$(printenv "$DEVICE"_DN_STATUS)\n\n"
 done
-printf "\n"
-printf ""$COUNT_CONNECTED"/"$#" devices connected\n"
+printf "\n"$COUNT_CONNECTED"/"$#" devices connected\n"
 if [[ COUNT_MISSING > 0 ]]; then
     printf "WARNING: $COUNT_MISSING devices missing\n" && return 1
     else return 0
