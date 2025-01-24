@@ -10,7 +10,7 @@ printf "Ready to Terminate\n"
 printf "-------------\n"
 
 . ./definitions.zsh
-set - $(printenv PC_DEVICES)
+set - $(printenv RASPI_DEVICES)
 
 #Quitting local
 printf "Quitting local..."
