@@ -14,14 +14,14 @@ set - $(printenv RASPI_DEVICES)
 
 #Quitting local
 printf "Quitting local..."
-shortcuts Quit
-if [[ $? == 0 ]] ; 
+shortcuts run Quit
+if [[ $? == 0 ]] ;
 then printf "\tSuccess\n"
 else	while [[ $? == 1 ]]; do
 			printf "\nFailed. Try again? y/n ->"
             read ANSWER
             case $ANSWER in
-            	( y ) printf "Quitting local..." && shortcuts Quit ;;
+            	( y ) printf "Quitting local..." && shortcuts run Quit ;;
                 ( n ) break;;
                 ( * ) printf "Not allowed.\n" && continue;;
             esac
@@ -32,16 +32,16 @@ fi
 if pingsub "$JURI_MINI" ; then
 	# Quitting J
     printf "Quitting JURI_MINI..."
-    ssh sprunk@"$(printenv JURI_MINI)" shortcuts Quit
+    ssh sprunk@"$(printenv JURI_MINI)" shortcuts run Quit
     if [[ $? == 0 ]] ; 
 		then printf "\tSuccess\n"
 		else	while [[ $? == 1 ]]; do
 					printf "\nFailed. Try again? y/n ->"
             		read ANSWER
             		case $ANSWER in
-            		( y ) printf "Quitting JURI_MINI..." && ssh sprunk@"$(printenv JURI_MINI)" shortcuts Quit ;;
-                ( n ) break;;
-                ( * ) printf "Not allowed.\n" && continue;;
+            		( y ) printf "Quitting JURI_MINI..." && ssh sprunk@"$(printenv JURI_MINI)" shortcuts run Quit ;;
+                ( n ) break ;;
+                ( * ) printf "Not allowed.\n" && continue ;;
             	esac
         		done
 	fi
@@ -55,9 +55,9 @@ else	while [[ $? == 1 ]]; do
 			printf "\nFailed. Try again? y/n ->"
             read ANSWER
             case $ANSWER in
-            	( y ) printf "Shutting down JURI_MINI..." && ssh sprunk@"$(printenv JURI_MINI)" osascript -e 'tell app "System Events" to shut down'
-                ( n ) break;;
-                ( * ) printf "Not allowed.\n" && continue;;
+            	( y ) printf "Shutting down JURI_MINI..." && ssh sprunk@"$(printenv JURI_MINI)" osascript -e 'tell app "System Events" to shut down' ;;
+                ( n ) break ;;
+                ( * ) printf "Not allowed.\n" && continue ;;
             esac
         done
 fi
