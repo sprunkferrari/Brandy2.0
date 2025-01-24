@@ -2,8 +2,9 @@
 # Script used for defining all the fixed variables in the system.
 #####
 export "GATEWAY"="192.168.1.1"
-export "SPRUNK_MINI"="192.168.1.10"
-export "JURI_MINI"="192.168.1.11"
+export "SPRUNK_MINI"="192.168.1.64"
+export "JURI_MINI"="192.168.1.70"
+export "SPRUNKBOOK"="192.168.1.12"
 export "SPRUNK_RASPI_P6"="192.168.1.20"
 export "SPRUNK_RASPI_R"="192.168.1.21"
 export "JACK_RASPI"="192.168.1.23"
@@ -17,7 +18,7 @@ export "ALL_DEVICES"="GATEWAY SPRUNK_MINI JURI_MINI SPRUNK_RASPI_P6 SPRUNK_RASPI
 export "PC_DEVICES"="SPRUNK_MINI JURI_MINI SPRUNK_RASPI_P6 SPRUNK_RASPI_R JACK_RASPI JURI_RASPI"
 export "MAC_DEVICES"="SPRUNK_MINI JURI_MINI"
 export "VIRTUALHERE_PATH"="/Applications/VirtualHereUniversal.app/Contents/MacOS/VirtualHereUniversal"
-export "PROJECTS_PATH"="./Projects"
+export "PRJ_PATH"="/Users/sprunk/brandy/Projects"
 pingsub()
 {
     ping -o -c 3 -t 2 -q $1 &> /dev/null

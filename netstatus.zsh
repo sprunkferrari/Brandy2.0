@@ -42,4 +42,5 @@ printf ""$COUNT_CONNECTED"/"$#" devices connected\n"
 if [[ COUNT_MISSING > 0 ]]; then
     printf "WARNING: $COUNT_MISSING devices missing\n" && return 1
     else return 0
+
 fi
