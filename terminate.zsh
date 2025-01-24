@@ -27,8 +27,10 @@ else	while [[ $? == 1 ]]; do
             esac
         done
 fi
-#Quitting J
+
+
 if pingsub "$JURI_MINI" ; then
+	# Quitting J
     printf "Quitting JURI_MINI..."
     ssh sprunk@"$(printenv JURI_MINI)" shortcuts Quit
     if [[ $? == 0 ]] ; 
@@ -37,14 +39,33 @@ if pingsub "$JURI_MINI" ; then
 					printf "\nFailed. Try again? y/n ->"
             		read ANSWER
             		case $ANSWER in
-            		( y ) printf "Quitting local..." && shortcuts Quit ;;
+            		( y ) printf "Quitting JURI_MINI..." && ssh sprunk@"$(printenv JURI_MINI)" shortcuts Quit ;;
                 ( n ) break;;
                 ( * ) printf "Not allowed.\n" && continue;;
             	esac
         		done
 	fi
+        
+        #Shutting J
+        printf "Shutting down JURI_MINI..."
+        ssh sprunk@"$(printenv JURI_MINI)" osascript -e 'tell app "System Events" to shut down'
+        if [[ $? == 0 ]] ; 
+then printf "\tSuccess\n"
+else	while [[ $? == 1 ]]; do
+			printf "\nFailed. Try again? y/n ->"
+            read ANSWER
+            case $ANSWER in
+            	( y ) printf "Shutting down JURI_MINI..." && ssh sprunk@"$(printenv JURI_MINI)" osascript -e 'tell app "System Events" to shut down'
+                ( n ) break;;
+                ( * ) printf "Not allowed.\n" && continue;;
+            esac
+        done
 fi
-sleep 5
+	
+        
+fi
+printf "------------\n"
+sleep 3
 #Shutting remotes
 for DEVICE ; do
         eval IP_ADDRESS=$"$DEVICE"
