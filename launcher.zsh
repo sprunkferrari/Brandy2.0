@@ -9,7 +9,7 @@ clear
 printf "--- BRANDY 2.0 --\n"
 printf "-----------------\nWelcome Sprunk!\n-----------------\n"
 
-. ./status.zsh
+. ./netstatus.zsh
 if [[ $? = 1 ]] ; then
             printf "WARNING: Not all devices are connected. ENTER to continue anyway."
             read CONTINUE
