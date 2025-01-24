@@ -2,8 +2,8 @@
 # Script used for defining all the fixed variables in the system.
 #####
 export "GATEWAY"="192.168.1.1"
-export "SPRUNK_MINI"="192.168.1.64"
-export "JURI_MINI"="192.168.1.70"
+export "SPRUNK_MINI"="192.168.1.10"
+export "JURI_MINI"="192.168.1.11"
 export "SPRUNKBOOK"="192.168.1.12"
 export "SPRUNK_RASPI_P6"="192.168.1.20"
 export "SPRUNK_RASPI_R"="192.168.1.21"
