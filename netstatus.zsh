@@ -12,12 +12,11 @@ set - $(printenv ALL_DEVICES)
 COUNT_MISSING="0"
 COUNT_CONNECTED="0"
 
-sleep 1
 $VIRTUALHERE_PATH -t list 2> ./temp/vh_list
 
 sleep 1
 dante-cli list-devices > ./temp/dn_list
-
+sleep 1
 printf "\n--DEVICE--\t\t-NET STATUS-\t\t-VH STATUS-\t\t-DANTE STATUS-\n\n"
 for DEVICE ; do
     if pingsub $DEVICE ;
