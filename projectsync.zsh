@@ -1,4 +1,4 @@
-# /bin/zsh
+#!/bin/zsh
 ############
 # Brandy2.0 by Francesco Ferrari
 # Project Sync: a simple tool for automating copy of the Project Folder to multiple destinations
