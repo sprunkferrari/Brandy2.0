@@ -13,13 +13,23 @@ printf "-------------\n"
 set - $(printenv PC_DEVICES)
 
 #Quitting local
-
-zsh ./quit.zsh
-
+printf "Quitting local..."
+shortcuts Quit
+if [[ $? == 0 ]] ; 
+then printf "\tSuccess\n"
+else	while [[ $? == 1 ]]; do
+			printf "\nFailed. Try again? y/n ->"
+            read ANSWER
+            case $ANSWER in
+            	( y ) continue;;
+                ( n ) break;;
+                ( * ) printf "Not allowed.\n" && continue;;
+            esac
+        done
 #Quitting J
 if pingsub "$JURI_MINI" ; then
-    printf "Quitting JURI_MINI\n"
-    ssh sprunk@"$(printenv JURI_MINI)" ./quit.zsh
+    printf "Quitting JURI_MINI..."
+    ssh sprunk@"$(printenv JURI_MINI)" shortcuts Quit
 fi
 sleep 5
 #Shutting remotes
