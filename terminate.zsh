@@ -5,6 +5,7 @@
 #
 #  Created by Francesco Ferrari on 20/12/24.
 #  
+clear
 printf "-------------\n"
 printf "Ready to Terminate\n"
 printf "-------------\n"
@@ -17,7 +18,7 @@ printf "Quitting local..."
 shortcuts run Quit
 if [[ $? == 0 ]] ;
 then printf "\tSuccess\n"
-else	while [[ $? == 1 ]]; do
+else	while [[ $? != 0 ]]; do
 			printf "\nFailed. Try again? y/n ->"
             read ANSWER
             case $ANSWER in
@@ -32,14 +33,14 @@ fi
 if pingsub "$JURI_MINI" ; then
 	# Quitting J
     printf "Quitting JURI_MINI..."
-    ssh sprunk@"$(printenv JURI_MINI)" shortcuts run Quit
-    if [[ $? == 0 ]] ; 
+    gtimeout 2 ssh sprunk@"$(printenv JURI_MINI)" shortcuts run Quit
+    if [[ $? == 0 | 255 ]] ;
 		then printf "\tSuccess\n"
-		else	while [[ $? == 1 ]]; do
+		else	while [[ $? != 0 | 255 ]]; do
 					printf "\nFailed. Try again? y/n ->"
             		read ANSWER
             		case $ANSWER in
-            		( y ) printf "Quitting JURI_MINI..." && ssh sprunk@"$(printenv JURI_MINI)" shortcuts run Quit ;;
+            		( y ) printf "Quitting JURI_MINI..." && gtimeout 2 ssh sprunk@"$(printenv JURI_MINI)" shortcuts run Quit ;;
                 ( n ) break ;;
                 ( * ) printf "Not allowed.\n" && continue ;;
             	esac
@@ -51,7 +52,7 @@ if pingsub "$JURI_MINI" ; then
         ssh sprunk@"$(printenv JURI_MINI)" /Users/sprunk/brandy/shutdown-applescript.zsh
         if [[ $? == 0 ]] ;
 then printf "\tSuccess\n"
-else	while [[ $? == 1 ]]; do
+else	while [[ $? != 0 ]]; do
 			printf "\nFailed. Try again? y/n ->"
             read ANSWER
             case $ANSWER in
@@ -74,7 +75,7 @@ for DEVICE ; do
     		ssh sprunk@"$IP_ADDRESS" shutdown -h now
         		if [[ $? == 0 ]] ; 
 					then printf "\tSuccess\n"
-					else	while [[ $? == 1 ]]; do
+					else	while [[ $? != 0 ]]; do
 								printf "\nFailed. Try again? y/n ->"
             					read ANSWER
             				case $ANSWER in
