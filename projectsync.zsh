@@ -24,7 +24,7 @@ printf "--------------\n"
 printf "SPRUNK_MINI Project:\t"$PRJ_DATE_SPRUNK_MINI"\n"
 printf "JURI_MINI Project:\t"$PRJ_DATE_JURI_MINI"\n"
 printf "SPRUNKBOOK Project:\t"$PRJ_DATE_SPRUNKBOOK"\n"
-
+#prompt user for syncing
 while :
 do
         printf "Do you wish to sync? y/n ->"
@@ -35,18 +35,18 @@ do
         ( * ) printf "Not allowed. Try again.\n" && continue ;;
         esac
 done
-    
+#prompt user for sync direction
 while :
 do
     echo "Choose the sync direction.\n1) From SPRUNKBOOK to the others.\n2) From SPRUNK_MINI to the others.\n3) From JURI_MINI to the others."
     read ANSWER
     case $ANSWER in
-        ( 1 ) ssh sprunk@"$SPRUNKBOOK" rsync -avPzh –delete $PRJ_PATH sprunk@"$SPRUNK_MINI":"$PRJ_PATH" && [[ "$PRJ_DATE_JURI_MINI" !== "Not found" ]] && ssh sprunk@"$SPRUNKBOOK" rsync -avPzh –delete $PRJ_PATH sprunk@"$JURI_MINI":"$PRJ_PATH" ;;
-        ( 2 ) if [[ "$PRJ_DATE_SPRUNKBOOK" !== "Not found" ]] ;
-                then rsync -avPzh -delete $PRJ_PATH sprunk@"$SPRUNKBOOK":"$PRJ_PATH"
-            elif [[ "$PRJ_DATE_JURI_MINI" !== "Not found" ]] ;
-                then rsync -avPzh -delete $PRJ_PATH sprunk@"$JURI_MINI":"$PRJ_PATH"
-            fi ;;
+        ( 1 ) ssh sprunk@"$SPRUNKBOOK" rsync -avPzh –delete $PRJ_PATH  sprunk@"$SPRUNK_MINI":"$PRJ_PATH" && [[ "$PRJ_DATE_JURI_MINI" !== "Not found" ]] && ssh sprunk@"$SPRUNKBOOK" rsync -avPzh –delete $PRJ_PATH sprunk@"$JURI_MINI":"$PRJ_PATH" ;;
+        ( 2 )   if [[ "$PRJ_DATE_SPRUNKBOOK" !== "Not found" ]] ;
+                    then rsync -avPzh -delete $PRJ_PATH sprunk@"$SPRUNKBOOK":"$PRJ_PATH"
+                elif [[ "$PRJ_DATE_JURI_MINI" !== "Not found" ]] ;
+                    then rsync -avPzh -delete $PRJ_PATH sprunk@"$JURI_MINI":"$PRJ_PATH"
+                fi ;;
         ( 3 ) ssh sprunk@"$JURI_MINI" rsync -avPzh –delete $PRJ_PATH sprunk@"$SPRUNK_MINI":"$PRJ_PATH" && [[ "$PRJ_DATE_SPRUNKBOOK" !== "Not found" ]] && ssh sprunk@"$JURI_MINI" rsync -avPzh –delete $PRJ_PATH sprunk@"$SPRUNKBOOK":"$PRJ_PATH" ;;
     esac
 done

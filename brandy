@@ -1,0 +1,15 @@
+#!/bin/zsh
+
+#  BRANDY2.0
+#
+#
+#  Created by Francesco Ferrari on 20/12/24.
+#  
+case $1 in
+( status ) . ./netstatus.zsh ;;
+( sync ) . ./projectsync.zsh ;;
+( launch ) . ./launcher.zsh ;;
+( terminate ) . ./terminate.zsh ;;
+( reboot ) . ./reboot.zsh ;;
+( * ) echo "Not allowed. Usage: brandy <command>" ;;
+esac

@@ -1,5 +1,5 @@
 #!/bin/zsh
-# Script used for defining all the fixed variables in the system.
+# Script used for defining the fixed variables and subroutines in the system.
 #####
 export "GATEWAY"="192.168.1.1"
 export "SPRUNK_MINI"="192.168.1.10"
@@ -18,7 +18,8 @@ export "ALL_DEVICES"="GATEWAY SPRUNK_MINI JURI_MINI SPRUNK_RASPI_P6 SPRUNK_RASPI
 export "RASPI_DEVICES"="SPRUNK_RASPI_P6 SPRUNK_RASPI_R JACK_RASPI JURI_RASPI"
 export "MAC_DEVICES"="SPRUNK_MINI JURI_MINI"
 export "VIRTUALHERE_PATH"="/Applications/VirtualHereUniversal.app/Contents/MacOS/VirtualHereUniversal"
-export "PRJ_PATH"="/Users/sprunk/brandy/Projects"
+export "BRANDY_PATH"="$HOME/Brandy2.0"
+export "PRJ_PATH"="/$HOME/Brandy2.0/Projects"
 pingsub()
 {
     ping -o -c 3 -t 2 -q $1 &> /dev/null
