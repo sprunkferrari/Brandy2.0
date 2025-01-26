@@ -41,13 +41,25 @@ do
     echo "Choose the sync direction.\n1) From SPRUNKBOOK to the others.\n2) From SPRUNK_MINI to the others.\n3) From JURI_MINI to the others."
     read ANSWER
     case $ANSWER in
-        ( 1 ) ssh sprunk@"$SPRUNKBOOK" rsync -avPzh –delete $PRJ_PATH  sprunk@"$SPRUNK_MINI":"$PRJ_PATH" && [[ "$PRJ_DATE_JURI_MINI" !== "Not found" ]] && ssh sprunk@"$SPRUNKBOOK" rsync -avPzh –delete $PRJ_PATH sprunk@"$JURI_MINI":"$PRJ_PATH" ;;
-        ( 2 )   if [[ "$PRJ_DATE_SPRUNKBOOK" !== "Not found" ]] ;
+        ( 1 )   ssh sprunk@"$SPRUNKBOOK" rsync -avPzh –delete $PRJ_PATH  sprunk@"$SPRUNK_MINI":"$PRJ_PATH"
+            && echo "Successful update on SPRUNK_MINI"
+            if [ "$PRJ_DATE_JURI_MINI" != "Not found" ] ;
+                then ssh sprunk@"$SPRUNKBOOK" rsync -avPzh –delete $PRJ_PATH sprunk@"$JURI_MINI":"$PRJ_PATH"
+                && echo "Successful update on JURI_MINI"
+            fi;;
+        ( 2 )   if [ "$PRJ_DATE_SPRUNKBOOK" != "Not found" ] ;
                     then rsync -avPzh -delete $PRJ_PATH sprunk@"$SPRUNKBOOK":"$PRJ_PATH"
-                elif [[ "$PRJ_DATE_JURI_MINI" !== "Not found" ]] ;
+                    && echo "Successful update on SPRUNKBOOK"
+                fi
+                if [ "$PRJ_DATE_JURI_MINI" != "Not found" ] ;
                     then rsync -avPzh -delete $PRJ_PATH sprunk@"$JURI_MINI":"$PRJ_PATH"
+                    && echo "Successful update on JURI_MINI"
                 fi ;;
-        ( 3 ) ssh sprunk@"$JURI_MINI" rsync -avPzh –delete $PRJ_PATH sprunk@"$SPRUNK_MINI":"$PRJ_PATH" && [[ "$PRJ_DATE_SPRUNKBOOK" !== "Not found" ]] && ssh sprunk@"$JURI_MINI" rsync -avPzh –delete $PRJ_PATH sprunk@"$SPRUNKBOOK":"$PRJ_PATH" ;;
+        ( 3 )   ssh sprunk@"$JURI_MINI" rsync -avPzh –delete $PRJ_PATH sprunk@"$SPRUNK_MINI":"$PRJ_PATH"
+                if [ "$PRJ_DATE_SPRUNKBOOK" != "Not found" ] ;
+                then ssh sprunk@"$JURI_MINI" rsync -avPzh –delete $PRJ_PATH sprunk@"$SPRUNKBOOK":"$PRJ_PATH"
+                    && echo "Successful update on JURI_MINI"
+                fi;;
     esac
 done
     
