@@ -10,22 +10,20 @@ Things BRANDY can do:
 
 To install BRANDY:
 
-$ git clone https://github.com/sprunkferrari/Brandy2.0.git $HOME/Brandy2.0
-$ ln -s $HOME/Brandy2.0/brandy /usr/.local/bin/
+$ git clone sprunkferrari/Brandy2.0 Brandy2.0
+$ ln -s Brandy2.0/brandy .local/bin/
 
 Before launching any command, check the definition file (definitions.zsh) first and replace to match your setup.
 
 Prerequirements:
 
 - XCODE 
-    xcode-select --install
+$ xcode-select --install
 - Homebrew
 - Rust 
-    curl https://sh.rustup.rs -sSf | sh 
+$ curl https://sh.rustup.rs -sSf | sh 
 - Coreutils 
-    brew install coreutils
+$ brew install coreutils
 - Dante-CLI  https://crates.io/crates/dante-cli
-    cargo install dante-cli
+$ cargo install dante-cli
 - VirtualHere client https://www.virtualhere.com/usb_client_software
-
-    
