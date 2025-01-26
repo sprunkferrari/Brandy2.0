@@ -34,4 +34,5 @@ done
 
 #Reboot local
 printf "Rebooting local...\n"
-shutdown -r 5
+sleep 5
+osascript -e 'tell app "System Events" to reboot'

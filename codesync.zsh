@@ -35,6 +35,6 @@ do
         ( * ) printf "Not allowed. Try again.\n" && continue ;;
         esac
 done
-rsync -avPzh –delete $BRANDY_PATH sprunk@"$SPRUNK_MINI":"$BRANDY_PATH" && echo "Successful update on SPRUNK_MINI"
-[ "$BRANDY_DATE_JURI_MINI" != "Not found" ] && rsync -avPzh –delete $BRANDY_PATH sprunk@"$JURI_MINI":"$BRANDY_PATH" && echo "Successful update on JURI_MINI"
+rsync -avPzh –delete --exclude 'Projects' $BRANDY_PATH sprunk@"$SPRUNK_MINI":"$HOME" && echo "Successful update on SPRUNK_MINI"
+[ "$BRANDY_DATE_JURI_MINI" != "Not found" ] && rsync -avPzh –delete --exclude 'Projects' $BRANDY_PATH sprunk@"$JURI_MINI":"$HOME" && echo "Successful update on JURI_MINI"
 exit
