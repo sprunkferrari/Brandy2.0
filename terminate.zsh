@@ -19,11 +19,11 @@ while ; do
         shortcuts run Quit
         if [[ $? == "0" ]] ; then
                 printf "\tSuccess\n" && break
-        else printf "\nFailed. Try again? y/n ->"
+        else printf "\tFailed. Try again? y/n ->"
             read ANSWER
             case $ANSWER in
-            	( y ) continue;;
-                ( n ) break;;
+            	( y ) continue ;;
+                ( n ) break ;;
             esac
         fi
 done
@@ -32,14 +32,16 @@ if pingsub "$JURI_MINI" ; then
 	# Quitting J
     while ; do
         printf "Quitting JURI_MINI... "
-        gtimeout 2 ssh sprunk@"$(printenv JURI_MINI)" shortcuts run Quit
-        if [[ $? == "0" ]] || [[ $? = "255"]] ;
+        gtimeout 2 ssh sprunk@"$JURI_MINI" shortcuts run Quit
+        if (
+        [ $? = "255" ] || [ $? = "0" ]
+        ) ;
             then printf "\tSuccess\n" && break
-            else printf "\nFailed. Try again? y/n ->"
-            read ANSWER
-            case $ANSWER in
-                ( y ) continue;;
-                ( n ) break;;
+            else printf "\tFailed. Try again? y/n ->"
+                read ANSWER
+                case $ANSWER in
+                    ( y ) continue ;;
+                    ( n ) break ;;
             esac
         fi
     done
@@ -47,10 +49,10 @@ if pingsub "$JURI_MINI" ; then
     #Shutting J
     while ; do
         printf "Shutting down JURI_MINI... "
-        ssh sprunk@"$(printenv JURI_MINI)" "$BRANDY_PATH"/shutdown-applescript.zsh
-        if [[ $? == "0" ]] || [[ $? = "255"]] ;
+        ssh sprunk@"$JURI_MINI" "$BRANDY_PATH"/shutdown-applescript.zsh
+        if [[ $? == "0" ]] ;
             then printf "\tSuccess\n" && break
-            else printf "\nFailed. Try again? y/n ->"
+            else printf "\tFailed. Try again? y/n ->"
             read ANSWER
             case $ANSWER in
                 ( y ) continue;;
@@ -70,7 +72,7 @@ for DEVICE ; do
     		ssh sprunk@"$IP_ADDRESS" sudo shutdown -h now
             if [[ $? == "0" ]] ;
                 then printf "\tSuccess\n"
-                else printf "\nFailed. Try again? y/n ->"
+                else printf "\tFailed. Try again? y/n ->"
                 read ANSWER
                 case $ANSWER in
                     ( y ) printf "Shutting down $DEVICE ..." && ssh sprunk@"$IP_ADDRESS" sudo shutdown -h now ;;
