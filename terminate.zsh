@@ -16,9 +16,9 @@ set - $(printenv RASPI_DEVICES)
 #Quitting local
 printf "Quitting local..."
 shortcuts run Quit
-if [[ $? == 0 ]] ;
+if [[ $? == "0" ]] ;
 then printf "\tSuccess\n"
-else	while [[ $? != 0 ]]; do
+else	while [[ $? != "0" ]]; do
 			printf "\nFailed. Try again? y/n ->"
             read ANSWER
             case $ANSWER in
