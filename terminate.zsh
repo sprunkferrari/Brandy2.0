@@ -14,13 +14,11 @@ printf "-------------\n"
 set - $(printenv RASPI_DEVICES)
 
 #Quitting local
-printf "Quitting local..."
-
 while : do
+        printf "Quitting local... "
         shortcuts run Quit
-        if [[ $? == "0" ]] ; then 
-                printf "\tSuccess\n"
-                break
+        if [[ $? == "0" ]] ; then
+                printf "\tSuccess\n" && break
         else printf "\nFailed. Try again? y/n ->"
             read ANSWER
             case $ANSWER in
@@ -34,59 +32,53 @@ done
 
 if pingsub "$JURI_MINI" ; then
 	# Quitting J
-    printf "Quitting JURI_MINI..."
-    gtimeout 2 ssh sprunk@"$(printenv JURI_MINI)" shortcuts run Quit
-    if [ $? = "0" ] || [ $? = "255"] ;
-		then printf "\tSuccess\n"
-		else	while [[ $? != 0 ]] ; do
-					printf "\nFailed. Try again? y/n ->"
-            		read ANSWER
-            		case $ANSWER in
-            		( y ) printf "Quitting JURI_MINI..." && gtimeout 2 ssh sprunk@"$(printenv JURI_MINI)" shortcuts run Quit ;;
-                ( n ) break ;;
-                ( * ) printf "Not allowed.\n" && continue ;;
-            	esac
-        		done
-	fi
-        
-        #Shutting J
-        printf "Shutting down JURI_MINI..."
-        ssh sprunk@"$(printenv JURI_MINI)" "$BRANDY_PATH"/shutdown-applescript.zsh
-        if [[ $? == 0 ]] ;
-then printf "\tSuccess\n"
-else	while [[ $? != 0 ]]; do
-			printf "\nFailed. Try again? y/n ->"
+    while : do
+        printf "Quitting JURI_MINI... "
+        gtimeout 2 ssh sprunk@"$(printenv JURI_MINI)" shortcuts run Quit
+        if [[ $? == "0" ]] || [[ $? = "255"]] ; then
+                printf "\tSuccess\n" && break
+            else printf "\nFailed. Try again? y/n ->"
             read ANSWER
             case $ANSWER in
-            	( y ) printf "Shutting down JURI_MINI..." && ssh sprunk@"$(printenv JURI_MINI)" "$BRANDY_PATH"/shutdown-applescript.zsh ;;
-                ( n ) break ;;
-                ( * ) printf "Not allowed.\n" && continue ;;
+                ( y ) continue;;
+                ( n ) break;;
             esac
-        done
+        fi
+    done
+        
+    #Shutting J
+    while : do
+        printf "Shutting down JURI_MINI... "
+        ssh sprunk@"$(printenv JURI_MINI)" "$BRANDY_PATH"/shutdown-applescript.zsh
+        if [[ $? == "0" ]] || [[ $? = "255"]] ; then
+                printf "\tSuccess\n" && break
+            else printf "\nFailed. Try again? y/n ->"
+            read ANSWER
+            case $ANSWER in
+                ( y ) continue;;
+                ( n ) break;;
+            esac
+        fi
+    done
 fi
 	
-        
-fi
 printf "------------\n"
 sleep 3
 #Shutting remotes
 for DEVICE ; do
         eval IP_ADDRESS=$"$DEVICE"
         if pingsub $IP_ADDRESS ; then
-        	printf "Shutting down $DEVICE ..."
-    		ssh sprunk@"$IP_ADDRESS" shutdown -h now
-        		if [[ $? == 0 ]] ; 
-					then printf "\tSuccess\n"
-					else	while [[ $? != 0 ]]; do
-								printf "\nFailed. Try again? y/n ->"
-            					read ANSWER
-            				case $ANSWER in
-            					( y ) printf "Shutting down $DEVICE ..." && ssh sprunk@"$IP_ADDRESS" sudo shutdown -h now ;;
-                ( n ) break;;
-                ( * ) printf "Not allowed.\n" && continue;;
-            				esac
-        					done
-                fi
+        	printf "Shutting down $DEVICE ... "
+    		ssh sprunk@"$IP_ADDRESS" sudo shutdown -h now
+            if [[ $? == "0" ]] ;
+                then printf "\tSuccess\n"
+                else printf "\nFailed. Try again? y/n ->"
+                read ANSWER
+                case $ANSWER in
+                    ( y ) printf "Shutting down $DEVICE ..." && ssh sprunk@"$IP_ADDRESS" sudo shutdown -h now ;;
+                    ( n ) break ;;
+                esac
+            fi
         fi
 done
 
