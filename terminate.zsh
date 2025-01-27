@@ -34,9 +34,9 @@ if pingsub "$JURI_MINI" ; then
 	# Quitting J
     printf "Quitting JURI_MINI..."
     gtimeout 2 ssh sprunk@"$(printenv JURI_MINI)" shortcuts run Quit
-    if [[ $? == 0 | 255 ]] ;
+    if [ $? = "0" ] || [ $? = "255"] ;
 		then printf "\tSuccess\n"
-		else	while [[ $? != 0 | 255 ]]; do
+		else	while [[ $? != 0 ]] ; do
 					printf "\nFailed. Try again? y/n ->"
             		read ANSWER
             		case $ANSWER in
@@ -49,14 +49,14 @@ if pingsub "$JURI_MINI" ; then
         
         #Shutting J
         printf "Shutting down JURI_MINI..."
-        ssh sprunk@"$(printenv JURI_MINI)" /Users/sprunk/brandy/shutdown-applescript.zsh
+        ssh sprunk@"$(printenv JURI_MINI)" "$BRANDY_PATH"/shutdown-applescript.zsh
         if [[ $? == 0 ]] ;
 then printf "\tSuccess\n"
 else	while [[ $? != 0 ]]; do
 			printf "\nFailed. Try again? y/n ->"
             read ANSWER
             case $ANSWER in
-            	( y ) printf "Shutting down JURI_MINI..." && ssh sprunk@"$(printenv JURI_MINI)" /Users/sprunk/brandy/shutdown-applescript.zsh ;;
+            	( y ) printf "Shutting down JURI_MINI..." && ssh sprunk@"$(printenv JURI_MINI)" "$BRANDY_PATH"/shutdown-applescript.zsh ;;
                 ( n ) break ;;
                 ( * ) printf "Not allowed.\n" && continue ;;
             esac
@@ -79,7 +79,7 @@ for DEVICE ; do
 								printf "\nFailed. Try again? y/n ->"
             					read ANSWER
             				case $ANSWER in
-            					( y ) printf "Shutting down $DEVICE ..." && ssh sprunk@"$IP_ADDRESS" shutdown -h now ;;
+            					( y ) printf "Shutting down $DEVICE ..." && ssh sprunk@"$IP_ADDRESS" sudo shutdown -h now ;;
                 ( n ) break;;
                 ( * ) printf "Not allowed.\n" && continue;;
             				esac
@@ -91,4 +91,4 @@ done
 #Shutting local
 printf "Shutting down local. Goodbye\n"
 sleep 5
-osascript -e 'tell app "System Events" to shut down'
+"$BRANDY_PATH"/shutdown-applescript.zsh
