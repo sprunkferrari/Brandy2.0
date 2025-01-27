@@ -15,19 +15,21 @@ set - $(printenv RASPI_DEVICES)
 
 #Quitting local
 printf "Quitting local..."
-shortcuts run Quit
-if [[ $? == "0" ]] ;
-then printf "\tSuccess\n"
-else	while [[ $? != "0" ]]; do
-			printf "\nFailed. Try again? y/n ->"
+
+while : do
+        shortcuts run Quit
+        if [[ $? == "0" ]] ; then 
+                printf "\tSuccess\n"
+                break
+        else printf "\nFailed. Try again? y/n ->"
             read ANSWER
             case $ANSWER in
-            	( y ) printf "Quitting local..." && shortcuts run Quit ;;
+            	( y ) continue;;
                 ( n ) break;;
-                ( * ) printf "Not allowed.\n" && continue;;
             esac
-        done
-fi
+        fi
+done
+
 
 
 if pingsub "$JURI_MINI" ; then
