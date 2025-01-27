@@ -27,8 +27,12 @@ fi
 
 while :
 do
+if [[ $ACTIVE_PROJECT == "" ]]; then
+
     printf "Enter the name of the project you wish to boot (default: malvax) -> "
     read -t 5 PROJECT_NAME
+else PROJECT_NAME=$ACTIVE_PROJECT
+fi
     case $PROJECT_NAME in
         ( malvax | "" )
             if [[ "$JURI_MINI_STATUS" != "CONNECTED" ]];
@@ -38,19 +42,19 @@ do
             fi
             break
             printf "--- Launching Malvax ---"
-            export ACTIVE_PROJECT="MALVAX"
+            export ACTIVE_PROJECT="malvax"
             ssh sprunk@"$SPRUNK_MINI" ./launch_malvax.zsh &&
             ssh sprunk@"$JURI_MINI" ./launch_malvax_seq.zsh
             ;;
         ( lpm )
             break
             printf "--- Launching LPM ---"
-            export ACTIVE_PROJECT="LPM"
+            export ACTIVE_PROJECT="lpm"
             ssh sprunk@"$SPRUNK_MINI" ./launch_lpm.zsh ;;
         ( bper )
             break
             printf "--- Launching BPER ---"
-            export ACTIVE_PROJECT="BPER"
+            export ACTIVE_PROJECT="bper"
             ssh sprunk@"$SPRUNK_MINI" ./launch_bper.zsh ;;
         ( * ) printf "ERROR: Project not found.\n" && continue ;;
     esac
