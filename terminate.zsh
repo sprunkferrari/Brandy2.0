@@ -14,7 +14,7 @@ printf "-------------\n"
 set - $(printenv RASPI_DEVICES)
 
 #Quitting local
-while : do
+while ; do
         printf "Quitting local... "
         shortcuts run Quit
         if [[ $? == "0" ]] ; then
@@ -28,15 +28,13 @@ while : do
         fi
 done
 
-
-
 if pingsub "$JURI_MINI" ; then
 	# Quitting J
-    while : do
+    while ; do
         printf "Quitting JURI_MINI... "
         gtimeout 2 ssh sprunk@"$(printenv JURI_MINI)" shortcuts run Quit
-        if [[ $? == "0" ]] || [[ $? = "255"]] ; then
-                printf "\tSuccess\n" && break
+        if [[ $? == "0" ]] || [[ $? = "255"]] ;
+            then printf "\tSuccess\n" && break
             else printf "\nFailed. Try again? y/n ->"
             read ANSWER
             case $ANSWER in
@@ -47,11 +45,11 @@ if pingsub "$JURI_MINI" ; then
     done
         
     #Shutting J
-    while : do
+    while ; do
         printf "Shutting down JURI_MINI... "
         ssh sprunk@"$(printenv JURI_MINI)" "$BRANDY_PATH"/shutdown-applescript.zsh
-        if [[ $? == "0" ]] || [[ $? = "255"]] ; then
-                printf "\tSuccess\n" && break
+        if [[ $? == "0" ]] || [[ $? = "255"]] ;
+            then printf "\tSuccess\n" && break
             else printf "\nFailed. Try again? y/n ->"
             read ANSWER
             case $ANSWER in
