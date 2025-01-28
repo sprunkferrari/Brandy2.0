@@ -49,7 +49,7 @@ if pingsub "$JURI_MINI" ; then
     #Shutting J
     while ; do
         printf "Shutting down JURI_MINI... "
-        ssh sprunk@"$JURI_MINI" "$BRANDY_PATH"/shutdown-applescript.zsh
+        ssh sprunk@"$JURI_MINI" "$BRANDY_PATH"/routines/shutdown.zsh
         if [[ $? == "0" ]] ;
             then printf "\tSuccess\n" && break
             else printf "\tFailed. Try again? y/n ->"
@@ -85,4 +85,4 @@ done
 #Shutting local
 printf "Shutting down local. Goodbye\n"
 sleep 5
-"$BRANDY_PATH"/shutdown-applescript.zsh
+"$BRANDY_PATH"/routines/shutdown.zsh
