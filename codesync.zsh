@@ -10,20 +10,20 @@ printf "Checking main folder date matching...\n"
 #retrieve local BRANDY date
 BRANDY_DATE_SPRUNKBOOK=$(date -r $BRANDY_PATH)
 #retrieve remote date 1
-if pingsub $SPRUNK_MINI ; then
-    BRANDY_DATE_SPRUNK_MINI=$(ssh sprunk@"$SPRUNK_MINI" date -r $BRANDY_PATH)
-    else BRANDY_DATE_SPRUNK_MINI="Not found"
+if pingsub $SPRUNKMINI ; then
+    BRANDY_DATE_SPRUNKMINI=$(ssh sprunk@"$SPRUNKMINI" date -r $BRANDY_PATH)
+    else BRANDY_DATE_SPRUNKMINI="Not found"
 fi
 #retrieve remote date 2
-if pingsub $JURI_MINI ; then
-    BRANDY_DATE_JURI_MINI=$(ssh sprunk@"$JURI_MINI" date -r $BRANDY_PATH)
-    else BRANDY_DATE_JURI_MINI="Not found"
+if pingsub $JURIMINI ; then
+    BRANDY_DATE_JURIMINI=$(ssh sprunk@"$JURIMINI" date -r $BRANDY_PATH)
+    else BRANDY_DATE_JURIMINI="Not found"
 fi
 #check date matching
 printf "--------------\n"
 printf "SPRUNKBOOK Project:\t"$BRANDY_DATE_SPRUNKBOOK"\n"
-printf "SPRUNK_MINI Project:\t"$BRANDY_DATE_SPRUNK_MINI"\n"
-printf "JURI_MINI Project:\t"$BRANDY_DATE_JURI_MINI"\n"
+printf "SPRUNKMINI Project:\t"$BRANDY_DATE_SPRUNKMINI"\n"
+printf "JURIMINI Project:\t"$BRANDY_DATE_JURIMINI"\n"
 #prompt user for syncing
 while :
 do
@@ -35,6 +35,6 @@ do
         ( * ) printf "Not allowed. Try again.\n" && continue ;;
         esac
 done
-rsync -avPzh –delete --exclude 'Projects' $BRANDY_PATH sprunk@"$SPRUNK_MINI":"$HOME" && echo "Successful update on SPRUNK_MINI"
-[ "$BRANDY_DATE_JURI_MINI" != "Not found" ] && rsync -avPzh –delete --exclude 'Projects' $BRANDY_PATH sprunk@"$JURI_MINI":"$HOME" && echo "Successful update on JURI_MINI"
+rsync -avPzh –delete --exclude 'Projects' $BRANDY_PATH sprunk@"$SPRUNKMINI":"$HOME" && echo "Successful update on SPRUNKMINI"
+[ "$BRANDY_DATE_JURIMINI" != "Not found" ] && rsync -avPzh –delete --exclude 'Projects' $BRANDY_PATH sprunk@"$JURIMINI":"$HOME" && echo "Successful update on JURIMINI"
 exit

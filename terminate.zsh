@@ -28,14 +28,12 @@ while ; do
         fi
 done
 
-if pingsub "$JURI_MINI" ; then
+if pingsub "$JURIMINI" ; then
 	# Quitting J
     while ; do
-        printf "Quitting JURI_MINI... "
-        gtimeout 2 ssh sprunk@"$JURI_MINI" shortcuts run Quit
-        if (
-        [ $? = "255" ] || [ $? = "0" ] || [ $? = "124" ] || [ $? = "130" ]
-        ) ;
+        printf "Quitting JURIMINI... "
+        gtimeout --preserve-status 2 ssh sprunk@"$JURIMINI" shortcuts run Quit
+        if  [ $? = "255" ] ;
             then printf "\tSuccess\n" && break
             else echo "$?" && printf "\tFailed. Try again? y/n ->"
                 read ANSWER
@@ -48,8 +46,8 @@ if pingsub "$JURI_MINI" ; then
         
     #Shutting J
     while ; do
-        printf "Shutting down JURI_MINI... "
-        ssh sprunk@"$JURI_MINI" "$BRANDY_PATH"/routines/shutdown.zsh
+        printf "Shutting down JURIMINI... "
+        ssh sprunk@"$JURIMINI" "$BRANDY_PATH"/routines/shutdown.zsh
         if [[ $? == "0" ]] ;
             then printf "\tSuccess\n" && break
             else printf "\tFailed. Try again? y/n ->"

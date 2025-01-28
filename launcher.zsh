@@ -19,9 +19,9 @@ printf "--------------\n"
 printf "Now Launching"
 printf "--------------\n"
 
-if [[ "$SPRUNK_MINI_STATUS" != "CONNECTED" ]];
+if [[ "$SPRUNKMINI_STATUS" != "\e[1;32mCONNECTED\e[m" ]];
     then
-                printf "WARNING: SPRUNK_MINI is missing. ENTER to continue anyway."
+                printf "WARNING: SPRUNKMINI is missing. ENTER to continue anyway."
                 read CONTINUE
 fi
 
@@ -35,27 +35,27 @@ else PROJECT_NAME=$ACTIVE_PROJECT
 fi
     case $PROJECT_NAME in
         ( malvax | "" )
-            if [[ "$JURI_MINI_STATUS" != "CONNECTED" ]];
+            if [[ "$JURIMINI_STATUS" != "\e[1;32mCONNECTED\e[m" ]];
                 then
-                            printf "WARNING: JURI_MINI is missing. ENTER to continue anyway."
+                            printf "WARNING: JURIMINI is missing. ENTER to continue anyway."
                             read CONTINUE
             fi
             break
             printf "--- Launching Malvax ---"
             export ACTIVE_PROJECT="malvax"
-            ssh sprunk@"$SPRUNK_MINI" ./launch_malvax.zsh &&
-            ssh sprunk@"$JURI_MINI" ./launch_malvax_seq.zsh
+            ssh sprunk@"$SPRUNKMINI" ./launch_malvax.zsh &&
+            ssh sprunk@"$JURIMINI" ./launch_malvax_seq.zsh
             ;;
         ( lpm )
             break
             printf "--- Launching LPM ---"
             export ACTIVE_PROJECT="lpm"
-            ssh sprunk@"$SPRUNK_MINI" ./launch_lpm.zsh ;;
+            ssh sprunk@"$SPRUNKMINI" ./launch_lpm.zsh ;;
         ( bper )
             break
             printf "--- Launching BPER ---"
             export ACTIVE_PROJECT="bper"
-            ssh sprunk@"$SPRUNK_MINI" ./launch_bper.zsh ;;
+            ssh sprunk@"$SPRUNKMINI" ./launch_bper.zsh ;;
         ( * ) printf "ERROR: Project not found.\n" && continue ;;
     esac
 done

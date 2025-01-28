@@ -17,7 +17,7 @@ $VIRTUALHERE_PATH -t list 2> ./temp/vh_list
 sleep 1
 dante-cli list-devices > ./temp/dn_list
 sleep 1
-printf "\n--DEVICE--\t\t-NET STATUS-\t\t-VH STATUS-\t\t-DANTE STATUS-\n\n"
+printf "\n--DEVICE--\t\t-NET STATUS-\t-VH STATUS-\t-DANTE STATUS-\n\n"
 for DEVICE ; do
     IP_ADDRESS=$(printenv $DEVICE)
     if pingsub $IP_ADDRESS ;
@@ -28,14 +28,14 @@ for DEVICE ; do
             export ""$DEVICE"_STATUS"="MISSING"
     fi ;
     if  grep -q $DEVICE ./temp/vh_list ;
-        then export ""$DEVICE"_VH_STATUS"="CONNECTED"
+        then export ""$DEVICE"_VH_STATUS"="\e[1;32mCONNECTED\e[m"
         else export ""$DEVICE"_VH_STATUS"=""
     fi ;
     if  grep -q $DEVICE ./temp/dn_list ; then
-        export ""$DEVICE"_DN_STATUS"="CONNECTED"
+        export ""$DEVICE"_DN_STATUS"="\e[1;32mCONNECTED\e[m"
         else export ""$DEVICE"_DN_STATUS"=""
     fi ;
-    printf "$DEVICE\t\t$(printenv "$DEVICE"_STATUS)\t\t$(printenv "$DEVICE"_VH_STATUS)\t\t$(printenv "$DEVICE"_DN_STATUS)\n\n"
+    printf "$DEVICE\t\t$(printenv "$DEVICE"_STATUS)\t\t$(printenv "$DEVICE"_VH_STATUS)\t$(printenv "$DEVICE"_DN_STATUS)\n\n"
 done
 printf "\n"$COUNT_CONNECTED"/"$#" devices connected\n"
 if [[ COUNT_MISSING > 0 ]]; then
