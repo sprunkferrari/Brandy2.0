@@ -19,21 +19,22 @@ dante-cli list-devices > ./temp/dn_list
 sleep 1
 printf "\n--DEVICE--\t\t-NET STATUS-\t\t-VH STATUS-\t\t-DANTE STATUS-\n\n"
 for DEVICE ; do
-    if pingsub $DEVICE ;
+    IP_ADDRESS=$(printenv $DEVICE)
+    if pingsub $IP_ADDRESS ;
         then
             COUNT_CONNECTED=$(("$COUNT_CONNECTED" + 1))
-            export ""$DEVICE"_STATUS"="CONNECTED"
+            export ""$DEVICE"_STATUS"="\e[1;32mCONNECTED\e[m"
         else COUNT_MISSING=$(("$COUNT_MISSING" + 1))
             export ""$DEVICE"_STATUS"="MISSING"
-    fi
+    fi ;
     if  grep -q $DEVICE ./temp/vh_list ;
         then export ""$DEVICE"_VH_STATUS"="CONNECTED"
         else export ""$DEVICE"_VH_STATUS"=""
-    fi
+    fi ;
     if  grep -q $DEVICE ./temp/dn_list ; then
         export ""$DEVICE"_DN_STATUS"="CONNECTED"
         else export ""$DEVICE"_DN_STATUS"=""
-    fi
+    fi ;
     printf "$DEVICE\t\t$(printenv "$DEVICE"_STATUS)\t\t$(printenv "$DEVICE"_VH_STATUS)\t\t$(printenv "$DEVICE"_DN_STATUS)\n\n"
 done
 printf "\n"$COUNT_CONNECTED"/"$#" devices connected\n"

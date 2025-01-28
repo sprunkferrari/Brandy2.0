@@ -34,10 +34,10 @@ if pingsub "$JURI_MINI" ; then
         printf "Quitting JURI_MINI... "
         gtimeout 2 ssh sprunk@"$JURI_MINI" shortcuts run Quit
         if (
-        [ $? = "255" ] || [ $? = "0" ]
+        [ $? = "255" ] || [ $? = "0" ] || [ $? = "124" ] || [ $? = "130" ]
         ) ;
             then printf "\tSuccess\n" && break
-            else printf "\tFailed. Try again? y/n ->"
+            else echo "$?" && printf "\tFailed. Try again? y/n ->"
                 read ANSWER
                 case $ANSWER in
                     ( y ) continue ;;
