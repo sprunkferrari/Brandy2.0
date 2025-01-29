@@ -9,7 +9,7 @@ cd $HOME/Brandy2.0
 case $1 in
 ( status ) . ./netstatus.zsh ;;
 ( sync ) . ./projectsync.zsh ;;
-( launch ) . ./launcher.zsh ;;
+( launch ) . ./launcher.zsh $2 ;;
 ( terminate ) . ./terminate.zsh ;;
 ( reboot ) . ./reboot.zsh ;;
 ( syncode ) . ./codesync.zsh ;;

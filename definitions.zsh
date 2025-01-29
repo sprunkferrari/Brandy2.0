@@ -25,3 +25,8 @@ pingsub()
 {
     ping -o -c 3 -t 2 -q $1 &> /dev/null
 }
+# syncsub usage: syncsub <IP SERVER/SENDER> <IP CLIENT/RECEIVER>
+syncsub()
+{
+    ssh $1 rsync -avPzh –delete $PRJ_PATH "$2":"$BRANDY_PATH"
+}

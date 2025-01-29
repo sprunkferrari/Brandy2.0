@@ -8,56 +8,40 @@
 clear
 printf "--- BRANDY 2.0 --\n"
 printf "-----------------\nWelcome Sprunk!\n-----------------\n"
-
+if [ $1 != "" ] ; then export "PROJECT_NAME"="$1"
+    elif ( [ $1 = "" ] && [ $ACTIVE_PROJECT != "" ] ) ;
+    then export "PROJECT_NAME"=$ACTIVE_PROJECT
+fi
 . ./netstatus.zsh
-if [[ $? = 1 ]] ; then
-            printf "WARNING: Not all devices are connected. ENTER to continue anyway."
-            read CONTINUE
-fi
+[[ $? = 1 ]] && printf "WARNING: Not all devices are connected. ENTER to continue anyway." && read CONTINUE
 
-printf "--------------\n"
-printf "Now Launching"
-printf "--------------\n"
-
-if [[ "$SPRUNKMINI_STATUS" != "\e[1;32mCONNECTED\e[m" ]];
-    then
-                printf "WARNING: SPRUNKMINI is missing. ENTER to continue anyway."
-                read CONTINUE
-fi
-
-while :
-do
-if [[ $ACTIVE_PROJECT == "" ]]; then
-
-    printf "Enter the name of the project you wish to boot (default: malvax) -> "
-    read -t 5 PROJECT_NAME
-else PROJECT_NAME=$ACTIVE_PROJECT
-fi
+printf "--------------\nNow Launching\n--------------\n"
+while ; do
     case $PROJECT_NAME in
-        ( malvax | "" )
-            if [[ "$JURIMINI_STATUS" != "\e[1;32mCONNECTED\e[m" ]];
-                then
-                            printf "WARNING: JURIMINI is missing. ENTER to continue anyway."
-                            read CONTINUE
-            fi
-            break
-            printf "--- Launching Malvax ---"
-            export ACTIVE_PROJECT="malvax"
-            ssh sprunk@"$SPRUNKMINI" ./launch_malvax.zsh &&
-            ssh sprunk@"$JURIMINI" ./launch_malvax_seq.zsh
-            ;;
-        ( lpm )
-            break
-            printf "--- Launching LPM ---"
-            export ACTIVE_PROJECT="lpm"
-            ssh sprunk@"$SPRUNKMINI" ./launch_lpm.zsh ;;
-        ( bper )
-            break
-            printf "--- Launching BPER ---"
-            export ACTIVE_PROJECT="bper"
-            ssh sprunk@"$SPRUNKMINI" ./launch_bper.zsh ;;
-        ( * ) printf "ERROR: Project not found.\n" && continue ;;
+            ( malvax )
+                printf "--- Launching Malvax ---" ;
+                export ACTIVE_PROJECT="malvax" ;
+                shortcuts run "Nascondi app" ;
+                ./routines/launch_malvax_A.zsh ;
+                if [[ "$JURIMINI_STATUS" != "\e[1;32mCONNECTED\e[m" ]] ;
+                    then printf "WARNING: JURIMINI is missing. ENTER to continue anyway." && read CONTINUE
+                    else gtimeout 2 ssh $JURIMINI shortcuts run "Nascondi\ app" ;
+                    ssh sprunk@"$JURIMINI" Brandy2.0/routines/launch_malvax_B.zsh ;
+                fi ;
+                printf "Done. Have fun!" && exit 0 ;;
+            ( lpm )
+                printf "--- Launching LPM ---" ;
+                export ACTIVE_PROJECT="lpm" ;
+                ssh sprunk@"$SPRUNKMINI" ./launch_lpm.zsh ;
+                exit 0 ;;
+            ( bper )
+                printf "--- Launching BPER ---" ;
+                export ACTIVE_PROJECT="bper" ;
+                ssh sprunk@"$SPRUNKMINI" ./launch_bper.zsh ;
+                exit 0 ;;
+            ( "" ) printf "Enter the name of the project you wish to boot ->"
+                read PROJECT_NAME && continue ;;
+            ( * ) printf "ERROR: Project not found.\n" && unset PROJECT_NAME && continue ;;
     esac
+    
 done
-
-

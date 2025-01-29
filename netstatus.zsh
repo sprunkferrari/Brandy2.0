@@ -35,7 +35,7 @@ for DEVICE ; do
         export ""$DEVICE"_DN_STATUS"="\e[1;32mCONNECTED\e[m"
         else export ""$DEVICE"_DN_STATUS"=""
     fi ;
-    printf "$DEVICE\t\t$(printenv "$DEVICE"_STATUS)\t\t$(printenv "$DEVICE"_VH_STATUS)\t$(printenv "$DEVICE"_DN_STATUS)\n\n"
+    printf "$DEVICE\t\t$(printenv "$DEVICE"_STATUS)\t$(printenv "$DEVICE"_VH_STATUS)\t$(printenv "$DEVICE"_DN_STATUS)\n\n"
 done
 printf "\n"$COUNT_CONNECTED"/"$#" devices connected\n"
 if [[ COUNT_MISSING > 0 ]]; then
