@@ -65,17 +65,19 @@ sleep 3
 for DEVICE ; do
         eval IP_ADDRESS=$"$DEVICE"
         if pingsub $IP_ADDRESS ; then
+        while ; do
         	printf "Shutting down $DEVICE ... "
     		ssh sprunk@"$IP_ADDRESS" sudo shutdown -h now &> /dev/null
             if ( [ $? = 255 ] || [ $? = 0 ] ) ;
-                then printf "\tSuccess\n"
+                then printf "\tSuccess\n" && break
                 else printf "\tFailed. Try again? y/n ->"
                 read ANSWER
                 case $ANSWER in
-                    ( y ) printf "Shutting down $DEVICE ..." && ssh sprunk@"$IP_ADDRESS" sudo shutdown -h now ;;
+                    ( y ) continue ;;
                     ( n ) break ;;
                 esac
             fi
+        done
         fi
 done
 
