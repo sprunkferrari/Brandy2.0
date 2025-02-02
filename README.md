@@ -20,10 +20,13 @@ Prerequirements:
 - XCODE 
 $ xcode-select --install
 - Homebrew
+$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 - Rust 
 $ curl https://sh.rustup.rs -sSf | sh 
 - Coreutils 
 $ brew install coreutils
+- Sendosc https://github.com/yoggy/sendosc
+$ brew install yoggy/tap/sendosc
 - Dante-CLI  https://crates.io/crates/dante-cli
 $ cargo install dante-cli
 - VirtualHere client https://www.virtualhere.com/usb_client_software

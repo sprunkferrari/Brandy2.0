@@ -12,10 +12,11 @@ printf "-------------\n"
 
 . ./definitions.zsh
 set - $(printenv RASPI_DEVICES)
-
+printf "Stopping playback\n"
+sendosc 127.0.0.1 39051 /global/stop s uuid=aa11
 #Quitting local
 while ; do
-        printf "Quitting local... " ;
+        printf "Quitting SPRUNKMINI... " ;
         ./routines/quit.zsh ;
         if [[ $? == "0" ]] ; then
             printf "\tSuccess\n" && break
@@ -63,11 +64,11 @@ printf "------------\n"
 sleep 3
 #Shutting remotes
 for DEVICE ; do
-        eval IP_ADDRESS=$"$DEVICE"
-        if pingsub $IP_ADDRESS ; then
+    eval IP_ADDRESS=$"$DEVICE"
+    if pingsub $IP_ADDRESS ; then
         while ; do
         	printf "Shutting down $DEVICE ... "
-    		ssh sprunk@"$IP_ADDRESS" sudo shutdown -h now &> /dev/null
+    		ssh $IP_ADDRESS sudo shutdown -h now &> /dev/null
             if ( [ $? = 255 ] || [ $? = 0 ] ) ;
                 then printf "\tSuccess\n" && break
                 else printf "\tFailed. Try again? y/n ->"
@@ -78,10 +79,10 @@ for DEVICE ; do
                 esac
             fi
         done
-        fi
+    fi
 done
 
 #Shutting local
-printf "Shutting down local. Goodbye\n"
+printf "Shutting down SPRUNKMINI. Goodbye\n"
 sleep 5
 "$BRANDY_PATH"/routines/shutdown.zsh

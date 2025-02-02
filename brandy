@@ -11,6 +11,7 @@ case $1 in
 ( sync ) . ./projectsync.zsh ;;
 ( launch ) . ./launcher.zsh $2 ;;
 ( terminate ) . ./terminate.zsh ;;
+( quit ) . ./quit.zsh ;;
 ( reboot ) . ./reboot.zsh ;;
 ( syncode ) . ./codesync.zsh ;;
 ( * ) echo "Not allowed. Usage: brandy <command>" ;;
