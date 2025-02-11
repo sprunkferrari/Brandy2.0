@@ -20,13 +20,12 @@ export "RASPI_DEVICES"="SPRUNKRASPI_P6 SPRUNKRASPI_R JACKRASPI JURIRASPI"
 export "MAC_DEVICES"="SPRUNKMINI JURIMINI"
 export "VIRTUALHERE_PATH"="/Applications/VirtualHereUniversal.app/Contents/MacOS/VirtualHereUniversal"
 export "BRANDY_PATH"="$HOME/Brandy2.0"
-export "PRJ_PATH"="/$HOME/Brandy2.0/Projects"
+export "PRJ_PATH"="$HOME/Brandy2.0/Projects"
 pingsub()
 {
     ping -o -c 3 -t 2 -q $1 &> /dev/null
 }
-# syncsub usage: syncsub <IP SERVER/SENDER> <IP CLIENT/RECEIVER>
-syncsub()
+notifysub()
 {
-    ssh $1 rsync -avPzh –delete $PRJ_PATH "$2":"$BRANDY_PATH"
+    sendosc 127.0.0.1 39051 /notify/toast s $1 $2
 }

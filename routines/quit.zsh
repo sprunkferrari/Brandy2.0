@@ -8,5 +8,6 @@
 osascript -e 'tell app "Ableton Live 12 Suite" to if it is running then activate' &> /dev/null
 sleep 1
 osascript -e 'tell app "System Events" to keystroke "s" using command down'
-sleep 2
+sleep 3
 osascript -e 'tell app "Ableton Live 12 Suite" to quit'
+sleep 5

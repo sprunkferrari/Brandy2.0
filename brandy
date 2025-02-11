@@ -14,5 +14,9 @@ case $1 in
 ( quit ) . ./quit.zsh ;;
 ( reboot ) . ./reboot.zsh ;;
 ( syncode ) . ./codesync.zsh ;;
-( * ) echo "Not allowed. Usage: brandy <command>" ;;
+( dante ) dante-cli control from-file danteconfig/$2 ;;
+( dvsfixQ ) . ./routines/dvsfixQ.zsh ;;
+( dvsfixA ) . ./routines/dvsfixA.zsh ;;
+( "quit -r" ) . ./quitreboot.zsh ;;
+( * ) echo "Not allowed. Usage: brandy <comman d>" ;;
 esac

@@ -8,15 +8,15 @@ printf "----------------\n"
 printf "---Project Sync----\n-----------------\n"
 printf "Checking project date matching...\n"
 #retrieve local prj date
-PRJ_DATE_SPRUNKMINI=$(date -r $PRJ_PATH)
+PRJ_DATE_SPRUNKMINI=$(date -r $PRJ_PATH/*)
 #retrieve remote date 1
 if pingsub $SPRUNKBOOK ; then
-    PRJ_DATE_SPRUNKBOOK=$(ssh $SPRUNKBOOK date -r $PRJ_PATH)
+    PRJ_DATE_SPRUNKBOOK=$(ssh $SPRUNKBOOK "date -r $PRJ_PATH/*")
     else PRJ_DATE_SPRUNKBOOK="Not found"
 fi
 #retrieve remote date 2
 if pingsub $JURIMINI ; then
-    PRJ_DATE_JURIMINI=$(ssh $JURIMINI date -r $PRJ_PATH)
+    PRJ_DATE_JURIMINI=$(ssh $JURIMINI "date -r $PRJ_PATH/*")
     else PRJ_DATE_JURIMINI="Not found"
 fi
 #check date matching
@@ -39,14 +39,14 @@ while ; do
     echo "Choose the sync direction.\n1) From SPRUNKBOOK to the others.\n2) From SPRUNKMINI to the others.\n3) From JURIMINI to the others."
     read ANSWER
     case $ANSWER in
-        ( 1 ) syncsub $SPRUNKBOOK $SPRUNKMINI && echo "Successful update on SPRUNKMINI";
-            [ "$PRJ_DATE_JURIMINI" != "Not found" ] && syncsub $SPRUNKBOOK $JURIMINI && echo "Successful update on JURIMINI" ;
+        ( 1 ) ./routines/prj_sync.zsh $SPRUNKBOOK $SPRUNKMINI && echo "Successful update on SPRUNKMINI";
+            [ "$PRJ_DATE_JURIMINI" != "Not found" ] && ./routines/prj_sync.zsh $SPRUNKBOOK $JURIMINI && echo "Successful update on JURIMINI" ;
             exit ;;
-        ( 2 ) [ "$PRJ_DATE_SPRUNKBOOK" != "Not found" ] && syncsub $SPRUNKMINI $SPRUNKBOOK && echo "Successful update on SPRUNKBOOK";
-            [ "$PRJ_DATE_JURIMINI" != "Not found" ] && syncsub $SPRUNKMINI $JURIMINI && echo "Successful update on JURIMINI";
+        ( 2 ) [ "$PRJ_DATE_SPRUNKBOOK" != "Not found" ] && ./routines/prj_sync.zsh $SPRUNKMINI $SPRUNKBOOK && echo "Successful update on SPRUNKBOOK";
+            [ "$PRJ_DATE_JURIMINI" != "Not found" ] && ./routines/prj_sync.zsh $SPRUNKMINI $JURIMINI && echo "Successful update on JURIMINI";
             exit ;;
-        ( 3 ) syncsub $JURIMINI $SPRUNKMINI && echo "Successful update on SPRUNKMINI";
-            [ "$PRJ_DATE_SPRUNKBOOK" != "Not found" ] && syncsub $JURIMINI $SPRUNKBOOK && echo "Successful update on SPRUNKBOOK";
+        ( 3 ) ./routines/prj_sync.zsh $JURIMINI $SPRUNKMINI && echo "Successful update on SPRUNKMINI";
+            [ "$PRJ_DATE_SPRUNKBOOK" != "Not found" ] && ./routines/prj_sync.zsh $JURIMINI $SPRUNKBOOK && echo "Successful update on SPRUNKBOOK";
             exit ;;
     esac
 done

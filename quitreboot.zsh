@@ -6,7 +6,7 @@
 #  Created by Francesco Ferrari on 20/12/24.
 #
 printf "-------------\n"
-printf "Quit tool\n"
+printf "Quit&Reboot tool\n"
 printf "-------------\n"
 
 . ./definitions.zsh
@@ -45,3 +45,12 @@ if pingsub "$JURIMINI" ; then
     done
 fi
 
+./routines/prj_sync.zsh $SPRUNKBOOK $SPRUNKMINI && echo "Successful update on SPRUNKMINI"
+[ "$PRJ_DATE_JURIMINI" != "Not found" ] && ./routines/prj_sync.zsh $SPRUNKBOOK $JURIMINI && echo "Successful update on JURIMINI"
+
+shortcuts run "Nascondi app"
+./routines/launch_malvax_A.zsh && echo "Project opened on SPRUNKMINI"
+gtimeout 2 ssh $JURIMINI shortcuts run "Nascondi\ app"
+ssh sprunk@"$JURIMINI" Brandy2.0/routines/launch_malvax_B.zsh && echo "Project opened on JURIMINI"
+printf "Done. Have fun!"
+exit

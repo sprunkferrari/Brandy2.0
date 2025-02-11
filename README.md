@@ -3,10 +3,11 @@ BRANDY is a toolkit made of multiple scripts, for the purpose of automating a li
 Things BRANDY can do:
 
 - Show the status of the network (brandy status)
-- Sync a project file between multiple computers (brandy sync)
-- Launch a project file across multiple computers (brandy launch)
+- Sync a project folder between multiple computers (brandy sync)
+- Launch a project file across multiple computers (brandy launch <prjname (opt)>)
+- End a session (brandy quit)
 - End a session and shut down multiple computers (brandy terminate)
-- End a session, reboot multiple computers, relaunch same session (brandy reboot)
+- Istantly make Dante subscriptions from a file (brandy dante <configname>)
 
 To install BRANDY:
 

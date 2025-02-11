@@ -14,9 +14,10 @@ printf "-------------\n"
 set - $(printenv RASPI_DEVICES)
 printf "Stopping playback\n"
 sendosc 127.0.0.1 39051 /global/stop s uuid=aa11
+notifysub "Playback stopped" "By Terminate script"
 #Quitting local
 while ; do
-        printf "Quitting SPRUNKMINI... " ;
+        printf "1/5. Quitting SPRUNKMINI... " ;
         ./routines/quit.zsh ;
         if [[ $? == "0" ]] ; then
             printf "\tSuccess\n" && break
@@ -32,11 +33,11 @@ done
 if pingsub "$JURIMINI" ; then
 	# Quitting J
     while ; do
-        printf "Quitting JURIMINI... "
+        printf "2/5. Quitting JURIMINI... "
         ssh sprunk@"$JURIMINI" "$BRANDY_PATH"/routines/quit.zsh
         if [ $? = "0" ] ;
             then printf "\tSuccess\n" && break
-            else printf "\tFailed. Try again? y/n ->"
+            else printf "\tFailed. Try again? y/n ->" ;
                 read ANSWER
                 case $ANSWER in
                     ( y ) continue ;;
@@ -47,10 +48,10 @@ if pingsub "$JURIMINI" ; then
     #Shutting J
     while ; do
         printf "Shutting down JURIMINI... "
-        ssh sprunk@"$JURIMINI" "$BRANDY_PATH"/routines/shutdown.zsh
+        ssh $JURIMINI $BRANDY_PATH/routines/shutdown.zsh
         if [ $? = "0" ] ;
             then printf "\tSuccess\n" && break ;
-            else printf "\tFailed. Try again? y/n ->" ;
+            else printf "\tFailed. Try again? y/n ->" && notifysub "JurMini Shutdown FAILED" "Term Seq. Halted" ;
             read ANSWER ;
             case $ANSWER in
                 ( y ) continue;;
@@ -66,23 +67,11 @@ sleep 3
 for DEVICE ; do
     eval IP_ADDRESS=$"$DEVICE"
     if pingsub $IP_ADDRESS ; then
-        while ; do
         	printf "Shutting down $DEVICE ... "
     		ssh $IP_ADDRESS sudo shutdown -h now &> /dev/null
-            if ( [ $? = 255 ] || [ $? = 0 ] ) ;
-                then printf "\tSuccess\n" && break
-                else printf "\tFailed. Try again? y/n ->"
-                read ANSWER
-                case $ANSWER in
-                    ( y ) continue ;;
-                    ( n ) break ;;
-                esac
-            fi
-        done
     fi
 done
-
 #Shutting local
 printf "Shutting down SPRUNKMINI. Goodbye\n"
 sleep 5
-"$BRANDY_PATH"/routines/shutdown.zsh
+$BRANDY_PATH/routines/shutdown.zsh

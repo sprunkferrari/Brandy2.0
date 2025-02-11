@@ -19,14 +19,26 @@ printf "--------------\nNow Launching\n--------------\n"
 while ; do
     case $PROJECT_NAME in
             ( malvax )
-                printf "--- Launching Malvax ---" ;
+                printf "--- Launching Malvax ---\n" ;
                 export ACTIVE_PROJECT="malvax" ;
                 shortcuts run "Nascondi app" ;
-                ./routines/launch_malvax_A.zsh ;
+                ./routines/date+dvs.zsh && sleep 1
+                ./routines/launch_malvax_A.zsh && echo "Project opened on SPRUNKMINI";
                 if [[ "$JURIMINI_STATUS" != "\e[1;32mCONNECTED\e[m" ]] ;
                     then printf "WARNING: JURIMINI is missing. ENTER to continue anyway." && read CONTINUE
                     else gtimeout 2 ssh $JURIMINI shortcuts run "Nascondi\ app" ;
-                    ssh sprunk@"$JURIMINI" Brandy2.0/routines/launch_malvax_B.zsh ;
+                    ssh sprunk@"$JURIMINI" Brandy2.0/routines/launch_malvax_B.zsh && echo "Project opened on JURIMINI";
+                fi ;
+                printf "Done. Have fun!" && exit 0 ;;
+            ( malvaxtest )
+                printf "--- Launching Malvax for testing purposes ---\n" ;
+                export ACTIVE_PROJECT="malvax" ;
+                shortcuts run "Nascondi app" ;
+                ./routines/launch_malvax_test.zsh ;
+                if [[ "$JURIMINI_STATUS" != "\e[1;32mCONNECTED\e[m" ]] ;
+                    then printf "WARNING: JURIMINI is missing. ENTER to continue anyway." && read CONTINUE
+                    else gtimeout 2 ssh $JURIMINI shortcuts run "Nascondi\ app" ;
+                    ssh sprunk@"$JURIMINI" Brandy2.0/routines/launch_malvax_test.zsh ;
                 fi ;
                 printf "Done. Have fun!" && exit 0 ;;
             ( lpm )
