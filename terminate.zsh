@@ -14,13 +14,12 @@ printf "-------------\n"
 set - $(printenv RASPI_DEVICES)
 printf "Stopping playback\n"
 sendosc 127.0.0.1 39051 /global/stop s uuid=aa11
-notifysub "Playback stopped" "By Terminate script"
 #Quitting local
 while ; do
         printf "1/5. Quitting SPRUNKMINI... " ;
         ./routines/quit.zsh ;
         if [[ $? == "0" ]] ; then
-            printf "\tSuccess\n" && break
+            printf "\tSuccess\n" && sleep 20 && break
             else printf "\tFailed. Try again? y/n ->"
                 read ANSWER
                 case $ANSWER in
@@ -36,7 +35,7 @@ if pingsub "$JURIMINI" ; then
         printf "2/5. Quitting JURIMINI... "
         ssh sprunk@"$JURIMINI" "$BRANDY_PATH"/routines/quit.zsh
         if [ $? = "0" ] ;
-            then printf "\tSuccess\n" && break
+            then printf "\tSuccess\n" && sleep 5 && break
             else printf "\tFailed. Try again? y/n ->" ;
                 read ANSWER
                 case $ANSWER in
@@ -72,6 +71,7 @@ for DEVICE ; do
     fi
 done
 #Shutting local
-printf "Shutting down SPRUNKMINI. Goodbye\n"
+printf "------------\n"
 sleep 5
+printf "Shutting down SPRUNKMINI. Goodbye\n"
 $BRANDY_PATH/routines/shutdown.zsh

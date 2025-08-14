@@ -22,23 +22,22 @@ while ; do
                 printf "--- Launching Malvax ---\n" ;
                 export ACTIVE_PROJECT="malvax" ;
                 shortcuts run "Nascondi app" ;
-                ./routines/date+dvs.zsh && sleep 1
-                ./routines/launch_malvax_A.zsh && echo "Project opened on SPRUNKMINI";
+                ./routines/launch_malvax.zsh && echo "Project opened on SPRUNKMINI";
                 if [[ "$JURIMINI_STATUS" != "\e[1;32mCONNECTED\e[m" ]] ;
                     then printf "WARNING: JURIMINI is missing. ENTER to continue anyway." && read CONTINUE
                     else gtimeout 2 ssh $JURIMINI shortcuts run "Nascondi\ app" ;
                     ssh sprunk@"$JURIMINI" Brandy2.0/routines/launch_malvax_B.zsh && echo "Project opened on JURIMINI";
                 fi ;
                 printf "Done. Have fun!" && exit 0 ;;
-            ( malvaxtest )
-                printf "--- Launching Malvax for testing purposes ---\n" ;
+            ( malvax_xf )
+                printf "--- Launching Malvax for winning X Factor! ---\n" ;
                 export ACTIVE_PROJECT="malvax" ;
                 shortcuts run "Nascondi app" ;
-                ./routines/launch_malvax_test.zsh ;
+                ./routines/launch_malvax_xf.zsh ;
                 if [[ "$JURIMINI_STATUS" != "\e[1;32mCONNECTED\e[m" ]] ;
                     then printf "WARNING: JURIMINI is missing. ENTER to continue anyway." && read CONTINUE
                     else gtimeout 2 ssh $JURIMINI shortcuts run "Nascondi\ app" ;
-                    ssh sprunk@"$JURIMINI" Brandy2.0/routines/launch_malvax_test.zsh ;
+                    ssh sprunk@"$JURIMINI" Brandy2.0/routines/launch_malvax_xf.zsh ;
                 fi ;
                 printf "Done. Have fun!" && exit 0 ;;
             ( lpm )
@@ -46,6 +45,12 @@ while ; do
                 export ACTIVE_PROJECT="lpm" ;
                 ssh sprunk@"$SPRUNKMINI" ./launch_lpm.zsh ;
                 exit 0 ;;
+            ( lpm_afterdark )
+                printf "--- Launching LPM Afterdark ---" ;
+                shortcuts run "Nascondi app" ;
+                ./routines/launch_lpm_afterdark.zsh ;
+                export ACTIVE_PROJECT="lpm_afterdark" ;
+                printf "Done. Lory Gay!" && exit 0 ;;
             ( bper )
                 printf "--- Launching BPER ---" ;
                 export ACTIVE_PROJECT="bper" ;

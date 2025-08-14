@@ -18,5 +18,5 @@ case $1 in
 ( dvsfixQ ) . ./routines/dvsfixQ.zsh ;;
 ( dvsfixA ) . ./routines/dvsfixA.zsh ;;
 ( "quit -r" ) . ./quitreboot.zsh ;;
-( * ) echo "Not allowed. Usage: brandy <comman d>" ;;
+( * ) echo "Not allowed. Usage: brandy <command>" ;;
 esac

@@ -19,7 +19,7 @@ while ; do
         ./routines/quit.zsh ;
         if [[ $? == "0" ]] ; then
             printf "\tSuccess\n" && notifysub "Quit SPRUNKMINI" "Quit Seq. 1/2" && break
-            else printf "\tFailed. Try again? y/n ->" && "SprMini Quit FAILED" "QuitSeq Halted" ;
+            else printf "\tFailed. Try again? y/n ->" && notifysub "SprMini Quit FAILED" "QuitSeq Halted" ;
                 read ANSWER
                 case $ANSWER in
                     ( y ) continue ;;
